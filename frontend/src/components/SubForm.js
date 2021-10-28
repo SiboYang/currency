@@ -2,15 +2,23 @@ import { Form, Input, Button, InputNumber, Select } from "antd";
 
 const { Option } = Select;
 
+const handleSubmit = (values) => {
+  console.log(values)
+}
+
 const SubForm = () => {
+  const [form] = Form.useForm()
+
   return (
     <Form
-      name="basic"
+      form={form}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 8 }}
       autoComplete="off"
+      onFinish={handleSubmit}
       initialValues={{
           Frequency: 5,
+          base: "CAD",
           currency: "CNY"
       }}
     >
@@ -36,12 +44,11 @@ const SubForm = () => {
         rules={[{ required: true, message: "Please enter your frequency" }]}
       >
         <InputNumber
-          addonAfter="$"
           min={1}
           max={100}
           keyboard={true}
-          placeholder="days/email"
         />
+        <span>days</span>
       </Form.Item>
 
       <Form.Item
@@ -57,7 +64,7 @@ const SubForm = () => {
       </Form.Item>
 
     <Form.Item label="base" name="base">
-        <Input value="$(CAD)" disabled />
+        <Input disabled />
     </Form.Item>
       
       <Form.Item
@@ -73,9 +80,9 @@ const SubForm = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item wrapperCol={{ offset: 10, span: 14 }}>
         <Button type="primary" htmlType="submit">
-          Submit
+          Subscribe
         </Button>
       </Form.Item>
     </Form>
