@@ -7,7 +7,7 @@ password = config("db_password", default="")
 
 class dbConnection:
     def __init__(self):
-        self.client = MongoClient("mongodb+srv://siboyang:20020309ysb@cluster0.iot5g.mongodb.net/cluster0?retryWrites=true&w=majority")
+        self.client = MongoClient(f"mongodb+srv://siboyang:{password}@cluster0.iot5g.mongodb.net/cluster0?retryWrites=true&w=majority")
         self.db = self.client["MailingList"]
         self.col = self.db["list"]
 
