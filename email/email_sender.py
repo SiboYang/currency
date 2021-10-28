@@ -1,5 +1,6 @@
 import smtplib
 import schedule, time
+import requests
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from db_connection import dbConnection
@@ -9,6 +10,7 @@ from decouple import config
 #configs and init
 sender = "sibo.currencybot1@gmail.com"
 password = config("email_password", default="")
+apikey = config("currency_apikey", default="")
 db = dbConnection()
 
 
@@ -18,10 +20,10 @@ def SMTP_init():
     server.login(sender, password)
     return server
 
-def construct_messgae(des="sibo.yang@mail.mcgill.ca", name="sibo", currency="CNY", amount="5.1", today="10/27/2021"):
+def construct_messgae(des, name, base , currency, amount, today):
     msg = MIMEMultipart()
 
-    message = f"Hi {name},\n1CAD worth {amount} {currency} on {today} "
+    message = f"Hi {name},\n1 CAD worth {amount} {currency} on {today} "
     msg['From'] = sender
     msg['To'] = des
     msg['Subject'] = "Today's currency"
@@ -30,10 +32,22 @@ def construct_messgae(des="sibo.yang@mail.mcgill.ca", name="sibo", currency="CNY
     return msg
 
 def send_email():
+    # make the api call there, probably store all the pair in dictionary like structure to reduce the 
+    # amount of api calls
+
+    currency_pairs = {}
+    bases = ["USD", "CAD"]
+    currencies = ["USD", "CAD", "CNY", "EUR"]
+    for base in bases:
+        response = requests.get(f"https://freecurrencyapi.net/api/v2/latest?apikey={apikey}&base_currency={base}").json()
+        for currency in currencies:
+            if currency != base:
+                currency_pairs[f"{base}_to_{currency}"] = response["data"][currency]
+    
     for user in db.retrieve_today_users():
-        msg = construct_messgae(user["email"], user["firstName"], user["currency"], amount="5.1", today=date.today().strftime("%m/%d/%Y"))
+        msg = construct_messgae(user["email"], user["firstName"],user["base"], user["currency"], amount=currency_pairs.get(f"{user['base']}_to_{user['currency']}"), today=date.today().strftime("%m/%d/%Y"))
         server.send_message(msg)
-        print(f"Message sent to someone")
+        print(f"Message sent to someone {user['firstName']}")
 
 schedule.every(4).seconds.do(send_email)
 server = SMTP_init()
