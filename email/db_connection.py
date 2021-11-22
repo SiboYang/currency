@@ -15,11 +15,12 @@ class dbConnection:
         all_users = self.col.find()
         today = []
         for user in all_users:
-            left = user['daysLeft'] - 1
-            if left == 0:
-                today.append(user)
-                left = user["frequency"]
-            self.col.update_one({"_id": user["_id"]}, {"$set": {"daysLeft": left}})
-            pprint(user)
+            if user["active"]:
+                left = user['daysLeft'] - 1
+                if left == 0:
+                    today.append(user)
+                    left = user["frequency"]
+                self.col.update_one({"_id": user["_id"]}, {"$set": {"daysLeft": left}})
+                pprint(user)
         
         return today

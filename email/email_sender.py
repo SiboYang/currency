@@ -45,9 +45,10 @@ def send_email():
                 currency_pairs[f"{base}_to_{currency}"] = response["data"][currency]
     
     for user in db.retrieve_today_users():
-        msg = construct_messgae(user["email"], user["firstName"],user["base"], user["currency"], amount=currency_pairs.get(f"{user['base']}_to_{user['currency']}"), today=date.today().strftime("%m/%d/%Y"))
-        server.send_message(msg)
-        print(f"Message sent to someone {user['firstName']}")
+        if user['active']:
+            msg = construct_messgae(user["email"], user["firstName"],user["base"], user["currency"], amount=currency_pairs.get(f"{user['base']}_to_{user['currency']}"), today=date.today().strftime("%m/%d/%Y"))
+            server.send_message(msg)
+            print(f"Message sent to someone {user['firstName']}")
 
 schedule.every(4).seconds.do(send_email)
 server = SMTP_init()
