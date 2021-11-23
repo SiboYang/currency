@@ -2686,6 +2686,13 @@ axe-core@^4.0.2:
   resolved "https://registry.npmmirror.com/axe-core/download/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
   integrity sha1-tVzY6N32Wf6JsGRoDhxqTc6rAyU=
 
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.npmmirror.com/axios/download/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha1-gE5voeS5xSiFAd2d/1anoJQNINY=
+  dependencies:
+    follow-redirects "^1.14.4"
+
 axobject-query@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npmmirror.com/axobject-query/download/axobject-query-2.2.0.tgz?cache=0&sync_timestamp=1633307588340&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Faxobject-query%2Fdownload%2Faxobject-query-2.2.0.tgz#943d47e10c0b704aa42275e20edf3722648989be"
@@ -4401,6 +4408,11 @@ dotenv@8.2.0:
   resolved "https://registry.nlark.com/dotenv/download/dotenv-8.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdotenv%2Fdownload%2Fdotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha1-l+YZJZradQ7qPk6j4mvO6lQksWo=
 
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.nlark.com/dotenv/download/dotenv-10.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdotenv%2Fdownload%2Fdotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+  integrity sha1-PUInuPuV+BCWzdK2ZlP7LHCFuoE=
+
 duplexer@^0.1.1:
   version "0.1.2"
   resolved "https://registry.nlark.com/duplexer/download/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
@@ -5226,6 +5238,11 @@ follow-redirects@^1.0.0:
   version "1.14.4"
   resolved "https://registry.nlark.com/follow-redirects/download/follow-redirects-1.14.4.tgz?cache=0&sync_timestamp=1631622129411&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
   integrity sha1-g4/fSKi73XnlLuUfsclOPtmLk3k=
+
+follow-redirects@^1.14.4:
+  version "1.14.5"
+  resolved "https://registry.npmmirror.com/follow-redirects/download/follow-redirects-1.14.5.tgz?cache=0&sync_timestamp=1635857764332&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
+  integrity sha1-8JpYSJgdPHcrU5Iwl3hSP42Fw4E=
 
 for-in@^1.0.2:
   version "1.0.2"
