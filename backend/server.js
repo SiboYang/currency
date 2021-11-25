@@ -2,16 +2,18 @@ import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import mongodb from "mongodb";
+import cors from "cors"
 import { sendConfirmationEmail } from "./veriEmailSender.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import cryptoRandomString from 'crypto-random-string'
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const { MongoClient } = mongodb;
 const app = express();
 dotenv.config();
 app.use(bodyParser.json());
-app.set("view engine", "ejs");
+app.use(cors())
 
 MongoClient.connect(
   `mongodb+srv://siboyang:${process.env.db_password}@cluster0.iot5g.mongodb.net/MailingList?retryWrites=true&w=majority`,
@@ -29,7 +31,10 @@ MongoClient.connect(
     app.post("/subscribe", async (req, res) => {
       try {
         const new_sub = req.body;
+        new_sub.active = false;
+        new_sub.activeCode = cryptoRandomString({length: 20, type: 'url-safe'})
         new_sub._id = new_sub.email;
+        new_sub.daysLeft = 1; // start receiving the first email the next day
         const created_user = await users.insertOne(new_sub);
         console.log("One user subscribed. Waiting for verification");
         sendConfirmationEmail(
@@ -84,6 +89,6 @@ MongoClient.connect(
   })
   .catch((error) => console.error(error));
 
-app.listen(3001, () => {
-  console.log("listening on 3001");
+app.listen(3000, () => {
+  console.log("listening on 3000");
 });

@@ -3,29 +3,30 @@ import ResultPage from "./ResultPage";
 import { useState } from "react";
 import { Form, Input, Button, InputNumber, Select, Modal } from "antd";
 import axios from "axios";
-import dotenv from "dotenv";
+
+
 
 const { Option } = Select;
-dotenv.config();
-
 const SubForm = () => {
   const [form] = Form.useForm();
   const [result, setResult] = useState("");
 
   const handleSubmit = async (values) => {
     try {
-      const res = await axios.post(`${process.env.BACKEND_URL}/subscribe`, values);
-      if (res.error) {
-        Modal.error({title: res.error})
-      } else {
-        setResult("success")
-      }
+      
+      await axios.post("http://localhost:3000/subscribe", values);
+      setResult("success")
     } catch (e) {
-      console.log(e)
-      setResult("error")
+      if (e.response.data.error) {
+        Modal.error({title: e.response.data.error})
+      }
+      else {
+        setResult("error")
+      }
+      
+      }
 
     }
-  };
 
   return (
     <div>
@@ -43,7 +44,7 @@ const SubForm = () => {
         >
           <Form.Item
             label="First name"
-            name="Firstname"
+            name="firstName"
             rules={[
               { required: true, message: "Please enter your first name" },
             ]}
@@ -53,7 +54,7 @@ const SubForm = () => {
 
           <Form.Item
             label="Last name"
-            name="Lastname"
+            name="lastname"
             rules={[{ required: true, message: "Please enter your last name" }]}
           >
             <Input />
@@ -61,7 +62,7 @@ const SubForm = () => {
 
           <Form.Item
             label="Frequency (days)"
-            name="Frequency"
+            name="frequency"
             rules={[{ required: true, message: "Please enter your frequency" }]}
           >
             <InputNumber min={1} parser={text=>/^\d+$/.test(text)?text:0} />
@@ -69,7 +70,7 @@ const SubForm = () => {
 
           <Form.Item
             label="Email"
-            name="Email"
+            name="email"
             rules={[
               { type: "email", message: "Please enter a valid email" },
               { required: true, message: "Please enter your email" },
