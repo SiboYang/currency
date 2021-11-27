@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd frontend && yarn run build",
     "install-client": "cd frontend && yarn",
-    "start": "cd backend && yarn start",
+    "install-server": "cd backend && yarn",
+    "start": "yarn install-server && cd backend && yarn start",
     "heroku-postbuild": "yarn install-client && yarn run build"
   },
   "repository": {
