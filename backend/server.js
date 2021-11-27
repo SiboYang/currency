@@ -31,6 +31,10 @@ MongoClient.connect(
     app.post("/subscribe", async (req, res) => {
       try {
         const new_sub = req.body;
+        if (new_sub.base === new_sub.target) {
+          res.status(500).json({ error: "Base and target cannot be the same" });
+          return;
+        }
         new_sub.active = false;
         new_sub.activeCode = cryptoRandomString({length: 20, type: 'url-safe'})
         new_sub._id = new_sub.email;

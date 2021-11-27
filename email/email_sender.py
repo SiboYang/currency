@@ -36,7 +36,7 @@ def send_email():
     # amount of api calls
 
     currency_pairs = {}
-    bases = ["USD", "CAD"]
+    bases = ["USD", "CAD", "CNY", "EUR"]
     currencies = ["USD", "CAD", "CNY", "EUR"]
     for base in bases:
         response = requests.get(f"https://freecurrencyapi.net/api/v2/latest?apikey={apikey}&base_currency={base}").json()
