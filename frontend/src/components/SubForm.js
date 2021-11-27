@@ -4,8 +4,6 @@ import { useState } from "react";
 import { Form, Input, Button, InputNumber, Select, Modal } from "antd";
 import axios from "axios";
 
-
-
 const { Option } = Select;
 const SubForm = () => {
   const [form] = Form.useForm();
@@ -13,20 +11,16 @@ const SubForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      
       await axios.post("http://localhost:3000/subscribe", values);
-      setResult("success")
+      setResult("success");
     } catch (e) {
       if (e.response.data.error) {
-        Modal.error({title: e.response.data.error})
+        Modal.error({ title: e.response.data.error });
+      } else {
+        setResult("error");
       }
-      else {
-        setResult("error")
-      }
-      
-      }
-
     }
+  };
 
   return (
     <div>
@@ -39,7 +33,7 @@ const SubForm = () => {
           onFinish={handleSubmit}
           initialValues={{
             base: "CAD",
-            currency: "CNY",
+            target: "CNY",
           }}
         >
           <Form.Item
@@ -54,7 +48,7 @@ const SubForm = () => {
 
           <Form.Item
             label="Last name"
-            name="lastname"
+            name="lastName"
             rules={[{ required: true, message: "Please enter your last name" }]}
           >
             <Input />
@@ -65,7 +59,10 @@ const SubForm = () => {
             name="frequency"
             rules={[{ required: true, message: "Please enter your frequency" }]}
           >
-            <InputNumber min={1} parser={text=>/^\d+$/.test(text)?text:0} />
+            <InputNumber
+              min={1}
+              parser={(text) => (/^\d+$/.test(text) ? text : 0)}
+            />
           </Form.Item>
 
           <Form.Item
@@ -94,8 +91,8 @@ const SubForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="currency"
-            name="currency"
+            label="target"
+            name="target"
             rules={[{ required: true, message: "Please enter the currency" }]}
           >
             <Select>

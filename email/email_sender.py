@@ -20,10 +20,10 @@ def SMTP_init():
     server.login(sender, password)
     return server
 
-def construct_messgae(des, name, base , currency, amount, today):
+def construct_messgae(des, name, base , target, amount, today):
     msg = MIMEMultipart()
 
-    message = f"Hi {name},\n1 CAD worth {amount} {currency} on {today} "
+    message = f"Hi {name},\n1 {base} worth {amount} {target} on {today} "
     msg['From'] = sender
     msg['To'] = des
     msg['Subject'] = "Today's currency"
@@ -45,7 +45,7 @@ def send_email():
                 currency_pairs[f"{base}_to_{currency}"] = response["data"][currency]
     
     for user in db.retrieve_today_users():
-        msg = construct_messgae(user["email"], user["firstName"],user["base"], user["currency"], amount=currency_pairs.get(f"{user['base']}_to_{user['currency']}"), today=date.today().strftime("%m/%d/%Y"))
+        msg = construct_messgae(user["email"], user["firstName"],user["base"], user["target"], amount=currency_pairs.get(f"{user['base']}_to_{user['target']}"), today=date.today().strftime("%m/%d/%Y"))
         server.send_message(msg)
         print(f"Message sent to someone {user['firstName']}")
 

@@ -1,19 +1,38 @@
-import { Form, Input, Button, InputNumber, Select } from "antd";
+import React from 'react'
+import { useState } from "react";
+import { Form, Input, Button, Modal } from "antd";
+import ResultPage from "./ResultPage";
+import axios from 'axios'
 
 const UnSubForm = () => {
   const [form] = Form.useForm();
+  const [result, setResult] = useState("");
+  const handleSubmit = async (values) => {
+    try {
+      await axios.delete("http://localhost:3000/unsubscribe", {data: values});
+      setResult("success");
+    } catch (e) {
+      if (e.response.data.error) {
+        Modal.error({ title: e.response.data.error });
+      } else {
+        setResult("error");
+      }
+    }
+  };
 
   return (
     <div>
+      {result === "" ?
       <Form
         form={form}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}
         autoComplete="off"
+        onFinish={handleSubmit}
       >
         <Form.Item
           label="First name"
-          name="Firstname"
+          name="firstName"
           rules={[{ required: true, message: "Please enter your first name" }]}
         >
           <Input />
@@ -21,14 +40,14 @@ const UnSubForm = () => {
 
         <Form.Item
           label="Last name"
-          name="Lastname"
+          name="lastName"
           rules={[{ required: true, message: "Please enter your last name" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Email"
-          name="Email"
+          name="email"
           rules={[
             { type: "email", message: "Please enter a valid email" },
             { required: true, message: "Please enter your email" },
@@ -44,6 +63,8 @@ const UnSubForm = () => {
         </Button>
       </Form.Item>
       </Form>
+      : <ResultPage mode="unsub" result={result} />
+}
     </div>
   );
 };

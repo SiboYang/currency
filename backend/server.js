@@ -3,7 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongodb from "mongodb";
 import cors from "cors"
-import { sendConfirmationEmail } from "./veriEmailSender.js";
+import { sendConfirmationEmail, sendUnsubEmail } from "./veriEmailSender.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import cryptoRandomString from 'crypto-random-string'
@@ -54,11 +54,12 @@ MongoClient.connect(
 
     app.delete("/unsubscribe", async (req, res) => {
       try {
-        const id = req.body;
-        const user_removed = await users.findOneAndDelete(id);
+        const user = req.body;
+        const user_removed = await users.findOneAndDelete(user);
         if (user_removed.value === null) {
-          res.status(404).json({ error: "Email not found" });
+          res.status(404).json({ error: "Information given doesn't exist" });
         } else {
+          sendUnsubEmail(user.firstName, user.email)
           console.log("one user unsubscribed.");
           res.status(200).json(user_removed.value);
         }
