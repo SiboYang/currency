@@ -15,6 +15,12 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use(cors())
 
+const PORT = process.env.PORT || 8080
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static('../frontend/build'))
+}
+
 MongoClient.connect(
   `mongodb+srv://siboyang:${process.env.db_password}@cluster0.iot5g.mongodb.net/MailingList?retryWrites=true&w=majority`,
   { useUnifiedTopology: true }
@@ -94,6 +100,6 @@ MongoClient.connect(
   })
   .catch((error) => console.error(error));
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("listening on 3000");
 });

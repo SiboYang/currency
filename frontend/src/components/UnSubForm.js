@@ -9,7 +9,7 @@ const UnSubForm = () => {
   const [result, setResult] = useState("");
   const handleSubmit = async (values) => {
     try {
-      await axios.delete("http://localhost:3000/unsubscribe", {data: values});
+      await axios.delete("/unsubscribe", {data: values});
       setResult("success");
     } catch (e) {
       if (e.response.data.error) {

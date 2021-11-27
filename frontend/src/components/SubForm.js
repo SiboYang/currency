@@ -11,7 +11,7 @@ const SubForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      await axios.post("http://localhost:3000/subscribe", values);
+      await axios.post("/subscribe", values);
       setResult("success");
     } catch (e) {
       if (e.response.data.error) {

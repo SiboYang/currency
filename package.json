@@ -1,0 +1,23 @@
+{
+  "name": "currency",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd frontend && yarn run build",
+    "install-client": "cd frontend && yarn",
+    "start": "cd backend && yarn start",
+    "heroku-postbuild": "yarn install-client && yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiboYang/currency.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SiboYang/currency/issues"
+  },
+  "homepage": "https://github.com/SiboYang/currency#readme"
+}
