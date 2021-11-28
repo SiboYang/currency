@@ -2,23 +2,25 @@ import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import mongodb from "mongodb";
-import cors from "cors"
+import cors from "cors";
 import { sendConfirmationEmail, sendUnsubEmail } from "./veriEmailSender.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import cryptoRandomString from 'crypto-random-string'
+import cryptoRandomString from "crypto-random-string";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const { MongoClient } = mongodb;
 const app = express();
 dotenv.config();
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080;
+
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static('../frontend/build'))
+  app.use(express.static("../frontend/build"));
 }
 
 MongoClient.connect(
@@ -42,7 +44,10 @@ MongoClient.connect(
           return;
         }
         new_sub.active = false;
-        new_sub.activeCode = cryptoRandomString({length: 20, type: 'url-safe'})
+        new_sub.activeCode = cryptoRandomString({
+          length: 20,
+          type: "url-safe",
+        });
         new_sub._id = new_sub.email;
         new_sub.daysLeft = 1; // start receiving the first email the next day
         const created_user = await users.insertOne(new_sub);
@@ -69,7 +74,7 @@ MongoClient.connect(
         if (user_removed.value === null) {
           res.status(404).json({ error: "Information given doesn't exist" });
         } else {
-          sendUnsubEmail(user.firstName, user.email)
+          sendUnsubEmail(user.firstName, user.email);
           console.log("one user unsubscribed.");
           res.status(200).json(user_removed.value);
         }
@@ -101,5 +106,5 @@ MongoClient.connect(
   .catch((error) => console.error(error));
 
 app.listen(PORT, () => {
-  console.log("listening on 3000");
+  console.log(`listening on ${PORT}`);
 });
