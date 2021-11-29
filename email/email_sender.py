@@ -49,7 +49,7 @@ def send_email():
         server.send_message(msg)
         print(f"Message sent to someone {user['firstName']}")
 
-schedule.every(4).seconds.do(send_email)
+schedule.every().day.at("10:30").do(send_email)
 server = SMTP_init()
 while 1:
     schedule.run_pending()

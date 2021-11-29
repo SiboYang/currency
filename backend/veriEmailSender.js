@@ -43,7 +43,7 @@ export const sendConfirmationEmail = (name, email, activeCode) => {
         html: `<h1>Email Confirmation</h1>
               <p>Hello ${name}</p>
               <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-              <a href=https://sheltered-lowlands-78859.herokuapp.com/verification?email=${email}&code=${activeCode}> http://localhost:3000/verification/?email=${email}&code=${activeCode}</a>
+              <a href=https://sheltered-lowlands-78859.herokuapp.com/verification?email=${email}&code=${activeCode}> https://sheltered-lowlands-78859.herokuapp.com/verification/?email=${email}&code=${activeCode}</a>
               </div>`,
       })
       .catch((err) => console.log(err));
