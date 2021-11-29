@@ -11,9 +11,9 @@ const ResultPage = (props) => {
 
   useEffect(() => {
     if (mode === "sub") {
-      setSuccessTitle("Successfully subscribed with currency email");
+      setSuccessTitle("Please check your mailbox for the verification email");
       setSuccessSubtitle(
-        "Please check your mailbox for the verification email!"
+        "Thank you for your supporting"
       );
       setFailTitle("Failed to subscribe :_(");
       setFailSubtitle("Please try again!");

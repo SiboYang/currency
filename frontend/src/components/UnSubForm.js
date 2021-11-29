@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from "react";
+import "./form.css"
 import { Form, Input, Button, Modal } from "antd";
 import ResultPage from "./ResultPage";
 import axios from 'axios'
@@ -57,9 +58,9 @@ const UnSubForm = () => {
           <Input />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 10, span: 14 }}>
-        <Button type="primary" htmlType="submit">
-          Unsubscribe
+        <Form.Item wrapperCol={{ offset: 9, span: 6 }}>
+        <Button type="primary" htmlType="submit" className='button'>
+        <span style={{"textAlign": "center"}}>Unsubscribe</span>
         </Button>
       </Form.Item>
       </Form>

@@ -1,6 +1,7 @@
 import React from "react";
 import ResultPage from "./ResultPage";
 import { useState } from "react";
+import "./form.css"
 import { Form, Input, Button, InputNumber, Select, Modal } from "antd";
 import axios from "axios";
 
@@ -103,9 +104,9 @@ const SubForm = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 10, span: 14 }}>
-            <Button type="primary" htmlType="submit">
-              Subscribe
+          <Form.Item wrapperCol={{ offset: 9, span: 6 }}>
+            <Button type="primary" htmlType="submit" className="button">
+              <span style={{"textAlign": "center"}}>Subscribe</span>
             </Button>
           </Form.Item>
         </Form>
