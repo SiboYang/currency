@@ -105,6 +105,6 @@ MongoClient.connect(
   })
   .catch((error) => console.error(error));
 
-app.listen((PORT, '0.0.0.0'), () => {
+app.listen((PORT), () => {
   console.log(`listening on ${PORT}`);
 });
