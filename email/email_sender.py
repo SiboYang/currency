@@ -34,7 +34,7 @@ def construct_messgae(des, name, base , target, amount, today):
 def send_email():
     # make the api call there, probably store all the pair in dictionary like structure to reduce the 
     # amount of api calls
-
+    server = SMTP_init()
     currency_pairs = {}
     bases = ["USD", "CAD", "CNY", "EUR"]
     currencies = ["USD", "CAD", "CNY", "EUR"]
@@ -50,7 +50,7 @@ def send_email():
         print(f"Message sent to someone {user['firstName']}")
 
 schedule.every().day.at("10:30").do(send_email)
-server = SMTP_init()
+
 while 1:
     schedule.run_pending()
     time.sleep(1)
