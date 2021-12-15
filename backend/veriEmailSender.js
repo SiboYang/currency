@@ -12,31 +12,33 @@ const oauth2Client = new OAuth2(
 );
 
 oauth2Client.setCredentials({
-  refresh_token:
-    process.env.email_refresh,
+  refresh_token: process.env.email_refresh,
 });
 
+const refresh = async () => {
+  const accessToken = await oauth2Client.getAccessToken();
 
-const accessToken = await oauth2Client.getAccessToken();
+  const transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      type: "OAuth2",
+      clientId: process.env.email_client_id,
+      clientSecret: process.env.email_secret,
+      refreshToken: process.env.email_refresh,
+      accessToken: accessToken,
+      user: "sibo.currencybot2@gmail.com",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
 
-const transport = nodemailer.createTransport({
-  service: "Gmail",
-  auth: {
-    type: "OAuth2",
-    clientId: process.env.email_client_id,
-    clientSecret: process.env.email_secret,
-    refreshToken: process.env.email_refresh,
-    accessToken: accessToken,
-    user: "sibo.currencybot2@gmail.com",
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
+  return transport
+};
 
 export const sendConfirmationEmail = (name, email, activeCode) => {
   try {
-    transport
+    refresh()
       .sendMail({
         from: "sibo.currencybot2@gmail.com",
         to: email,
@@ -55,7 +57,7 @@ export const sendConfirmationEmail = (name, email, activeCode) => {
 
 export const sendUnsubEmail = (name, email) => {
   try {
-    transport
+    refresh()
       .sendMail({
         from: "sibo.currencybot2@gmail.com",
         to: email,
